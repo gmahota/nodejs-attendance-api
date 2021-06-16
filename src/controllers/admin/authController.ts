@@ -14,7 +14,10 @@ const login = async (request: Request, response: Response) => {
       password,
     } = request.body;
 
-    let caCrt = fs.readFileSync('./secrets/ca.crt')
+    const authMode = process.env.Auth_mode
+
+    if(authMode ==="Biostar"){
+      let caCrt = fs.readFileSync('./secrets/ca.crt')
 
     const httpsAgent = new https.Agent({
       requestCert: true,
@@ -53,10 +56,24 @@ const login = async (request: Request, response: Response) => {
           avatar_url:"images/faces/profileIcon.png"
         }
       });
-    })).catch((err) => {
+    })).catch((err:any) => {
+
       console.log(err);
       return response.status(422).json({ msg: "Invalid username or password" });
     })
+    }else{
+
+      return response.status(200).json({
+        token: process.env.Auth_token,
+        user: {
+          name :"Administrator",
+          id:"1",
+          avatar_url:"images/faces/profileIcon.png"
+        }
+      });
+    }
+
+
 
     //return response.status(422).json({ msg: "Invalid username or password" });
   } catch (e) {
