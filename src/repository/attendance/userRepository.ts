@@ -75,10 +75,21 @@ const create = async function create(
   return data;
 };
 
+const insertItems = async function insertItems(
+  data: User[]
+): Promise<User[]> {
+  const UserRepository = getRepository(User);
+
+  await UserRepository.save(data);
+
+  return data;
+};
+
 export default {
   create,
   findAll,
   findById,
   findByScheduleId,
-  findByGroupId
+  findByGroupId, 
+  insertItems
 };

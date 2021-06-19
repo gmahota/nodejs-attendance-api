@@ -55,6 +55,36 @@ export const create_User = async (request: Request, response: Response) => {
   }
 };
 
+export const create_Users = async (request: Request, response: Response) => {
+  // const {
+  //    name,
+  //    scheduleByUserOrGroup,
+  //    userGroup,
+  //    schedule
+  // } = await request.body;
+  const Users = await request.body;
+
+  try {
+    let items: User[] = Users;
+    // {
+      // id:0,
+      // name,
+      // scheduleByUserOrGroup,
+      // userGroup,
+      // schedule
+    // };
+
+    items = await UserService.insertItems(items);
+
+    return response.status(200).json(items);
+    
+  } catch (e) {
+    return response.status(404).json(
+      { msg: "error to create a product with that i", error: e },
+    );
+  }
+};
+
 export const delete_user = async (request: Request, response: Response) => {
   return response.status(500).json(
     { msg: "not Implemented" },

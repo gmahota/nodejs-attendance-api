@@ -49,6 +49,33 @@ export const create_PunchLog = async (request: Request, response: Response) => {
   }
 };
 
+export const insert_PunchLogs = async (request: Request, response: Response) => {
+  const {
+    userId,
+    userName,
+    date,
+    json
+  } = await request.body;
+
+  try {
+    let item: PunchLog = {
+      id:0,
+      userId,
+      userName,
+      date,
+      json
+    };
+
+    item = await PunchLogService.create(item);
+
+    return response.status(200).json(PunchLog);
+  } catch (e) {
+    return response.status(404).json(
+      { msg: "error to create a PunchLog with that i", error: e },
+    );
+  }
+};
+
 export const delete_PunchLog = async (request: Request, response: Response) => {
   return response.status(500).json(
     { msg: "not Implemented" },

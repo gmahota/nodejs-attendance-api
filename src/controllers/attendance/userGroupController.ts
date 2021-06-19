@@ -102,3 +102,38 @@ export const delete_UserGroup = async (request: Request, response: Response) => 
     );
   }
 };
+
+export const create_UserGroups = async (request: Request, response: Response) => {
+  const UserGroups = await request.body;
+
+  try {
+    let items: UserGroup[] = UserGroups;
+    //await productervice.remove(id);
+
+    items = await UserGroupService.insertItems(items);
+
+    return response.status(200).json(items);
+    
+  } catch (e) {
+    return response.send(404).json(
+      { msg: "error to create a order with that i" },
+    );
+  }
+};
+
+export const update_UserGroups = async (request: Request, response: Response) => {
+  return response.status(500).json(
+    { msg: "not Implemented" },
+  );
+  const { id } = request.body;
+
+  try {
+    //await productervice.remove(id);
+
+    return response.send(200).json({ id: id });
+  } catch (e) {
+    return response.send(404).json(
+      { msg: "error to create a order with that i" },
+    );
+  }
+};

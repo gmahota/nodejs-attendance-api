@@ -14,9 +14,13 @@ const create = (item:UserGroup) =>
   const getByScheduleId = (id: string) =>
   UserGroupRepository.findByScheduleId(id)
 
+  const insertItems = (items:UserGroup[]) =>
+  UserGroupRepository.insertItems(items)
+
 export default {
   getAll,
   getById,
   create,
-  getByScheduleId
+  getByScheduleId,
+  insertItems
 }

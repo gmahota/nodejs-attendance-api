@@ -1,3 +1,4 @@
+import { insert_PunchLogs } from './../../controllers/attendance/punchLogController';
 
 import PunchLog  from '../../models/attendance/punchLog'
 import PunchLogRepository  from '../../repository/attendance/punchLogRepository'
@@ -10,9 +11,14 @@ const getAll = () =>
 
 const create = (PunchLog:PunchLog) =>
   PunchLogRepository.create(PunchLog)
+
+  const insertItems = (PunchLog:PunchLog) =>
+  PunchLogRepository.create(PunchLog)
+  
   
 export default {
   getAll,
   getById,
-  create
+  create,
+  insert_PunchLogs
 }

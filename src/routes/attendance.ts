@@ -5,6 +5,7 @@ import {
   get_all_PunchLogs,
   get_PunchLog,
   create_PunchLog,
+  insert_PunchLogs,
 } from "../controllers/attendance/punchLogController";
 
 import {
@@ -16,14 +17,16 @@ import {
 import {
   get_all_Users,
   get_User,
-  create_User
+  create_User,
+  create_Users  
 } from "../controllers/attendance/userController";
 
 import {
   get_all_UserGroups,
   get_UserGroup,
   create_UserGroup,
-  edit_UserGroup
+  edit_UserGroup,
+  create_UserGroups  
 } from "../controllers/attendance/userGroupController"
   ;
 
@@ -56,8 +59,9 @@ const attendanceRouter = Router();
 attendanceRouter
   .get("/users", get_all_Users)
   .get("/user/:id", get_User)
-  .post("/user/", create_User);
-
+  .post("/user/", create_User)
+  .post("/users/", create_Users);
+  
 attendanceRouter
   .get("/shifts", get_all_Shifts)
   .get("/shift/:id", get_Shift)
@@ -77,12 +81,16 @@ attendanceRouter
   .get("/usergroups", get_all_UserGroups)
   .get("/usergroup/:id", get_UserGroup)
   .post("/usergroup/", create_UserGroup)
-  .post("/usergroup/:id", edit_UserGroup);
+  .post("/usergroup/:id", edit_UserGroup)
+  .post("/usergroups/", create_UserGroups);
+  
 
 attendanceRouter
   .get("/punchLogs", get_all_PunchLogs)
   .get("/punchLog/:id", get_PunchLog)
-  .post("/punchLog/", create_PunchLog);
+  .post("/punchLog/", create_PunchLog)
+  .post("/punchLogs/", insert_PunchLogs);
+  
 
 attendanceRouter
   .post("/punchDailyCards", get_all_PunchDailyCards)
