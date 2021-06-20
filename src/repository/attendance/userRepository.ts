@@ -78,6 +78,9 @@ const create = async function create(
 const insertItems = async function insertItems(
   data: User[]
 ): Promise<User[]> {
+
+  console.log('***********************Entramos no repository do User ********************************')
+  console.log(data)
   const UserRepository = getRepository(User);
 
   await UserRepository.save(data);

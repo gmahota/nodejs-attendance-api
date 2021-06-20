@@ -56,23 +56,12 @@ export const create_User = async (request: Request, response: Response) => {
 };
 
 export const create_Users = async (request: Request, response: Response) => {
-  // const {
-  //    name,
-  //    scheduleByUserOrGroup,
-  //    userGroup,
-  //    schedule
-  // } = await request.body;
+
   const Users = await request.body;
 
   try {
     let items: User[] = Users;
-    // {
-      // id:0,
-      // name,
-      // scheduleByUserOrGroup,
-      // userGroup,
-      // schedule
-    // };
+    
 
     items = await UserService.insertItems(items);
 

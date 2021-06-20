@@ -46,8 +46,22 @@ const create = async function create(
   return data;
 };
 
+const insertItems = async function insertItems(
+  data: PunchLog[]
+): Promise<PunchLog[]> {
+
+  console.log('***********************Entramos no repository do User ********************************')
+  
+  const PunchRepository = getRepository(PunchLog);
+
+  await PunchRepository.save(data);
+
+  return data;
+};
+
 export default {
   create,
   findById,
-  findAll
+  findAll,
+  insertItems
 };

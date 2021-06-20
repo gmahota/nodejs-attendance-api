@@ -57,10 +57,13 @@ const create = async function create(
 const insertItems = async function insertItems(
   data: UserGroup[]
 ): Promise<UserGroup[]> {
+
+  console.log('***********************Entramos no repository do User ********************************')
+  console.log(data)
   const UserGroupRepository = getRepository(UserGroup);
 
   await UserGroupRepository.save(data);
-
+  console.log('***********************FIM no repository do User ********************************')
   return data;
 };
 

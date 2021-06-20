@@ -9,13 +9,13 @@ export default class userGroup {
     @Column({length: 50, nullable:false})
     name: string
 
-    @Column()
+    @Column({ nullable:true})
     createdAt?:Date
 
-    @Column()
+    @Column({ nullable:true})
     updatedAt?:Date
 
-    @Column()
+    @Column({ nullable:true})
     parent_id?:number
 
     @ManyToOne(() => WorkSchedule, (item) => item.id)

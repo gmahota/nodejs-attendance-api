@@ -1,29 +1,26 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 
 @Entity("punchLog")
 export default class PunchLog {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn()
   id: number;
 
-  @Column({length: 50, nullable:false })
+  @Column({length: 50, nullable:true })
   code?:string;
 
   @Column({length: 50, nullable:false })
-  userId?: string
+  userId: string
 
-  @Column({length: 50, nullable:false })
-  userName?: string
+  @Column({length: 100, nullable:false })
+  userName: string
 
-  @Column({length: 50, nullable:false })
+  @Column({length: 50, nullable:true })
   userGroup?:string
-
-  @Column({length: 100})
-  userDepartment?:string
-
-  @Column()
+  
+  @Column({ nullable:false })
   date: Date
 
-  @Column({ length: 100, nullable: true })
+  @Column({ length: 200, nullable: true })
   device?: string
 
   @Column({ length: 100, nullable: true })
@@ -55,6 +52,12 @@ export default class PunchLog {
 
   @Column({ length: 50, nullable: true })
   shiftDescription?: string
+
+  @Column({ nullable:true})
+  createdAt?: Date
+
+  @Column({ nullable:true})
+  updatedAt?: Date
 
   @Column({ length: 50, nullable: true })
   json?: string

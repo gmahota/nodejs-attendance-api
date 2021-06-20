@@ -15,6 +15,12 @@ export default class user {
     @Column({length: 1, nullable:false})
     scheduleByUserOrGroup: string
 
+    @Column({ nullable:true})
+    createdAt?: Date
+
+    @Column({ nullable:true})
+    updatedAt?: Date
+
     @ManyToOne(() => userGroup, (item) => item.id)
     @JoinColumn({name:'userGroupId'})
     userGroup?: userGroup;

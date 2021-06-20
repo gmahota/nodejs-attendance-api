@@ -49,24 +49,15 @@ export const create_PunchLog = async (request: Request, response: Response) => {
   }
 };
 
+
 export const insert_PunchLogs = async (request: Request, response: Response) => {
-  const {
-    userId,
-    userName,
-    date,
-    json
-  } = await request.body;
+  const PunchLogs = await request.body;
+  console.log('*************************Pelo menos entramos no controller do punch log')
 
   try {
-    let item: PunchLog = {
-      id:0,
-      userId,
-      userName,
-      date,
-      json
-    };
+    let items: PunchLog[] = PunchLogs;
 
-    item = await PunchLogService.create(item);
+    items = await PunchLogService.insertItems(items);
 
     return response.status(200).json(PunchLog);
   } catch (e) {

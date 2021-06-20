@@ -108,7 +108,6 @@ export const create_UserGroups = async (request: Request, response: Response) =>
 
   try {
     let items: UserGroup[] = UserGroups;
-    //await productervice.remove(id);
 
     items = await UserGroupService.insertItems(items);
 

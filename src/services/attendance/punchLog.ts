@@ -12,13 +12,14 @@ const getAll = () =>
 const create = (PunchLog:PunchLog) =>
   PunchLogRepository.create(PunchLog)
 
-  const insertItems = (PunchLog:PunchLog) =>
-  PunchLogRepository.create(PunchLog)
+  const insertItems = (PunchLog:PunchLog[]) =>
+  PunchLogRepository.insertItems(PunchLog)
   
   
 export default {
   getAll,
   getById,
   create,
-  insert_PunchLogs
+  // insert_PunchLogs,
+  insertItems
 }
