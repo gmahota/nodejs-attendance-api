@@ -6,8 +6,6 @@ import ExcelPunchLog from "../../services/attendance/punchLogExcel";
 export const get_all_PunchLogs = async (request: Request, response: Response) => {
   const PunchLogs = await PunchLogService.getAll();
 
-  //ExcelPunchLog.fillData(PunchLogs); //fillPunchLog(PunchLogs);
-
   return response.status(200).json(PunchLogs);
 };
 
@@ -52,8 +50,7 @@ export const create_PunchLog = async (request: Request, response: Response) => {
 
 export const insert_PunchLogs = async (request: Request, response: Response) => {
   const PunchLogs = await request.body;
-  console.log('*************************Pelo menos entramos no controller do punch log')
-
+ 
   try {
     let items: PunchLog[] = PunchLogs;
 

@@ -11,8 +11,8 @@ export default class PunchLog {
   @Column({length: 50, nullable:false })
   userId: string
 
-  @Column({length: 100, nullable:false })
-  userName: string
+  @Column({length: 100, nullable:true })
+  userName?: string
 
   @Column({length: 50, nullable:true })
   userGroup?:string

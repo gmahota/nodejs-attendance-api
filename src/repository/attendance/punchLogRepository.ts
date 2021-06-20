@@ -49,9 +49,7 @@ const create = async function create(
 const insertItems = async function insertItems(
   data: PunchLog[]
 ): Promise<PunchLog[]> {
-
-  console.log('***********************Entramos no repository do User ********************************')
-  
+    
   const PunchRepository = getRepository(PunchLog);
 
   await PunchRepository.save(data);
