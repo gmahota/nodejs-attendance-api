@@ -2,14 +2,14 @@
     "swagger": "2.0",
     "info": {
         "version": "1.0.0",
-        "title": "NodeJS Sales Api",
+        "title": "Rainbon Attendance Api",
         "description": "A Api Middleware from UTTN",
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "agnusinvoiceapi.herokuapp.com",
+    "host": "rainbon-attendance-api.herokuapp.com",
     "basePath": "/api",
     "schemes": [
         "http",
