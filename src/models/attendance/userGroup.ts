@@ -27,6 +27,6 @@ export default class userGroup {
     
     childUserGroup?:userGroup[]
 
-    totalUsers:number
+    totalUsers?:number
 
 }
