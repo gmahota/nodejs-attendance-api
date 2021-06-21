@@ -7,7 +7,9 @@ import User from "../../models/attendance/user";
 
 export const get_all_UserGroups = async (request: Request, response: Response) => {
 
-  const UserGroups = await UserGroupService.getAll();
+  const { seeUsers } = request.query; 
+
+  const UserGroups = await UserGroupService.getAll(Boolean(seeUsers)||false);
 
   return response.status(200).json(UserGroups);
 };

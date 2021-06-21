@@ -25,7 +25,7 @@ const findAll = async function findAll(): Promise<UserGroup[]> {
   });
 
   return data;
-}
+}   
 
 const findByScheduleId = async function findAll(id: string): Promise<UserGroup[]> {
   const UserGroupRepository = getRepository(UserGroup);
