@@ -68,7 +68,7 @@ const create = async function create(
   const UserRepository = getRepository(User);
 
   if(!!data.userGroup?.id){
-    data.userGroup = await Group.findById(data.userGroup?.id||0)
+    data.userGroup = await Group.findById(data.userGroup?.id.toString()||"0")
     await UserRepository.save(data)
     //console.log(data[i])
   }
