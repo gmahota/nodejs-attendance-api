@@ -1,6 +1,7 @@
 import User from "../../models/attendance/user";
 import { getRepository,getConnection,FindConditions } from "typeorm";
-
+import Group from "./userGroupRepository";
+import userGroup from "../../models/attendance/userGroup";
 interface Filter {
   department?:string,
   group?: string;
@@ -16,10 +17,6 @@ const findById = async function findById(id: string): Promise<User> {
 
   return data;
 };
-
-
-
-
 
 const findAll = async function findAll(filter:Filter): Promise<User[]> {
   const UserRepository = getRepository(User);
@@ -70,6 +67,12 @@ const create = async function create(
 ): Promise<User> {
   const UserRepository = getRepository(User);
 
+  if(!!data.userGroup?.id){
+    data.userGroup = await Group.findById(data.userGroup?.id||0)
+    await UserRepository.save(data)
+    //console.log(data[i])
+  }
+
   await UserRepository.save(data);
 
   return data;
@@ -79,9 +82,18 @@ const insertItems = async function insertItems(
   data: User[]
 ): Promise<User[]> {
 
-  console.log('***********************Entramos no repository do User ********************************')
-  console.log(data)
   const UserRepository = getRepository(User);
+
+  const groups = await Group.findAll();
+
+  for(var i = 0; i < data.length; i++){
+        
+    if(!!data[i].userGroup?.id){
+      let ugroup: any= groups.find( p=> p.id === data[i].userGroup?.id)
+
+      data[i].userGroup = ugroup     
+    }
+  }
 
   await UserRepository.save(data);
 

@@ -5,7 +5,7 @@ interface Key {
   id?: any;
 }
 
-const findById = async function findById(id: string): Promise<UserGroup> {
+const findById = async function findById(id: number): Promise<UserGroup> {
   const UserRepository = getRepository(UserGroup);
 
   const data: UserGroup = await UserRepository.findOneOrFail({

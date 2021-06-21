@@ -60,8 +60,7 @@ export const create_Users = async (request: Request, response: Response) => {
   const Users = await request.body;
 
   try {
-    let items: User[] = Users;
-    
+    let items: User[] = Users;    
 
     items = await UserService.insertItems(items);
 
