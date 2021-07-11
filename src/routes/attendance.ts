@@ -38,6 +38,13 @@ import {
 } from "../controllers/attendance/shiftController";
 
 import {
+  get_all_UserShifts,
+  get_UserShift,
+  create_UserShift,
+  edit_UserShift
+} from "../controllers/attendance/userShiftController";
+
+import {
   get_all_WorkSchedules,
   get_WorkSchedule,
   create_WorkSchedule,
@@ -101,5 +108,11 @@ attendanceRouter
   .get("/userDepartments", get_all_UserDepartments)
   .get("/userDepartment/:id", get_UserDepartment)
   .post("/userDepartment/", create_UserDepartment);
+
+  attendanceRouter
+  .get("/userShifts", get_all_UserShifts)
+  .get("/userShift/:id", get_UserShift)
+  .post("/userShift/", create_UserShift)
+  .post("/userShift/:id", edit_UserShift);
 
 export default attendanceRouter;
