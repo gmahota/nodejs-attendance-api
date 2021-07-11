@@ -26,6 +26,7 @@ export const create_Shift = async (request: Request, response: Response) => {
     name,
     description,
     type,
+    status,
     timeIn,
     timeOut,
     minTimeIn,
@@ -44,6 +45,7 @@ export const create_Shift = async (request: Request, response: Response) => {
       name,
       description,
       type,
+      status,
       timeIn,
       timeOut,
       minTimeIn,
@@ -73,6 +75,7 @@ export const edit_Shift = async (request: Request, response: Response) => {
     name,
     description,
     type,
+    status,
     timeIn,
     timeOut,
     minTimeIn,
@@ -88,6 +91,7 @@ export const edit_Shift = async (request: Request, response: Response) => {
     item.name = name
     item.description = description
     item.type = type
+    item.status = status
     item.timeIn = timeIn
     item.timeOut = timeOut
     item.minTimeIn = minTimeIn

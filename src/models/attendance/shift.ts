@@ -15,6 +15,9 @@ export default class shift {
     @Column({ length: 50, nullable: true })
     type?: string
 
+    @Column({ length: 50, nullable: true })
+    status?: string
+
     @Column()
     minTimeIn: Date
 
