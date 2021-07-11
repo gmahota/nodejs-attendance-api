@@ -9,11 +9,11 @@ export default class shift {
     @Column({length: 50, nullable:false})
     name: string
 
-    @Column({length: 50, nullable:false})
-    description: string
+    @Column({length: 50, nullable:true})
+    description?: string
 
-    @Column({ length: 50, nullable: false })
-    type: string
+    @Column({ length: 50, nullable: true })
+    type?: string
 
     @Column()
     minTimeIn: Date
