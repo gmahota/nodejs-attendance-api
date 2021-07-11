@@ -13,7 +13,7 @@ tab1.schedulerId, tab1.userDefinedSchedulerName, tab1.exception, tab1.shiftSuppo
 SELECT *,   
     ROW_NUMBER() OVER(PARTITION BY userId, date(date) order by date) AS row_num  
 FROM punchLog) tab1) tab2
-left outer join shift on tab2.userDefinedSchedulerId = shift.scheduleIdId  and time(date) between time(shift.minTimeIn) and time(shift.maxTimeOut)
+left outer join shift on tab2.userDefinedSchedulerId = shift.scheduleId  and time(date) between time(shift.minTimeIn) and time(shift.maxTimeOut)
 and tab2.diaSemanaPunch = shift.dayofweek);
 
 /*select * from View_PunchCard;
