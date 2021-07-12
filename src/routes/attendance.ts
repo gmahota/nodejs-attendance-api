@@ -34,7 +34,8 @@ import {
   get_all_Shifts,
   get_Shift,
   create_Shift,
-  edit_Shift
+  edit_Shift,
+  create_UserShifts
 } from "../controllers/attendance/shiftController";
 
 import {
@@ -73,7 +74,8 @@ attendanceRouter
   .get("/shifts", get_all_Shifts)
   .get("/shift/:id", get_Shift)
   .post("/shift", create_Shift)
-  .post("/shift/:id", edit_Shift);
+  .post("/shift/:id", edit_Shift)
+  .post("/shift/:id/userShifts", create_UserShifts);
 
 attendanceRouter
   .get("/workschedules", get_all_WorkSchedules)

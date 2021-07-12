@@ -44,5 +44,5 @@ export default class shift {
     @OneToMany(() => UserShift, item => item.shift, {
         cascade: ['insert', 'update']
     })
-    userShift?: UserShift[]
+    userShifts?: UserShift[]
 }

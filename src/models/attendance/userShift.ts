@@ -20,13 +20,13 @@ export default class userShift {
     shift?: Shift;
 
     @Column()
-    groupId: number
+    groupId?: number
 
     @Column({ length: 50, nullable: false })
-    groupName: string
+    groupName?: string
 
     @Column({ length: 1, nullable: false })
-    status: string
+    status?: string
 
     @Column({ nullable: true })
     dateStart: Date

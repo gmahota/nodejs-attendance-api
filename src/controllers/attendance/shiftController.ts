@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import ShiftService from "../../services/attendance/shift";
 import Shift from "../../models/attendance/shift";
 import WorkScheduleService from "../../services/attendance/workSchedule";
+import User from './../../models/attendance/user';
+import UserShift from './../../models/attendance/userShift';
 
 export const get_all_Shifts = async (request: Request, response: Response) => {
 
@@ -33,12 +35,10 @@ export const create_Shift = async (request: Request, response: Response) => {
     maxTimeOut,
     gracePeriod,
     dayOfWeek,
-    scheduleId
+    scheduleId,
+    userShift
   } = await request.body;
 
-
-  
-  
   try {
     let item: Shift = {
       id: 0,
@@ -51,11 +51,12 @@ export const create_Shift = async (request: Request, response: Response) => {
       minTimeIn,
       maxTimeOut,
       gracePeriod,
-      dayOfWeek      
+      dayOfWeek,
+      userShift
     };
 
-    if(!!scheduleId){      
-      item.schedule =await WorkScheduleService.getById(scheduleId)
+    if (!!scheduleId) {
+      item.schedule = await WorkScheduleService.getById(scheduleId)
     }
 
     item = await ShiftService.create(item);
@@ -98,6 +99,41 @@ export const edit_Shift = async (request: Request, response: Response) => {
     item.maxTimeOut = maxTimeOut
     item.gracePeriod = gracePeriod
     item.dayOfWeek = dayOfWeek
+
+    item = await ShiftService.create(item);
+
+    return response.status(200).json(item);
+
+  } catch (e) {
+    return response.status(404).json(
+      { msg: "error to create a product with that i", error: e },
+    );
+  }
+};
+
+export const create_UserShifts = async (request: Request, response: Response) => {
+
+  const { id } = request.params;
+
+  const { users } = request.body;
+
+  try {
+
+    let item: Shift = await ShiftService.getById(id);
+
+    const userShifts: UserShift[] = users.map((user: User) => {
+      return {
+        id: 0,
+        user: user,
+        shift: item,
+        groupId: 0,
+        groupName: "Ola Mundo",
+        dateStart: new Date(),
+        dateEnd: new Date(),
+      }
+    })
+
+    item.userShifts = userShifts
 
     item = await ShiftService.create(item);
 
