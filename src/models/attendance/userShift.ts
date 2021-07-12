@@ -4,7 +4,7 @@ import Shift from "./shift";
 
 @Entity("userShift")
 export default class userShift {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number
 
     //@Column()
