@@ -124,19 +124,21 @@ export const create_UserShifts = async (request: Request, response: Response) =>
 
     let item: Shift = await ShiftService.getById(id);
     
+    const userShifts: UserShift[] = []
 
-    const userShifts: UserShift[] = users.map((user: User) => {
-      return {
+    users.forEach((user: User) => {
+      userShifts.push({
         id: 0,
         user: user,
         groupId: 0,
         groupName: "Ola Mundo",
         dateStart: new Date(),
         dateEnd: new Date(),
-      }
+      }) 
     })
 
     item.userShifts = userShifts
+    
     console.log(item.userShifts)
 
     item = await ShiftService.create(item);
