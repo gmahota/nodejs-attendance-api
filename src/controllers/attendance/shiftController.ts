@@ -36,7 +36,8 @@ export const create_Shift = async (request: Request, response: Response) => {
     gracePeriod,
     dayOfWeek,
     scheduleId,
-    userShift
+    userShifts
+
   } = await request.body;
 
   try {
@@ -52,7 +53,7 @@ export const create_Shift = async (request: Request, response: Response) => {
       maxTimeOut,
       gracePeriod,
       dayOfWeek,
-      userShift
+      userShifts
     };
 
     if (!!scheduleId) {
