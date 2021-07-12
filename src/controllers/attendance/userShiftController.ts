@@ -26,32 +26,27 @@ export const get_UserShift = async (request: Request, response: Response) => {
 export const create_UserShift = async (request: Request, response: Response) => {
   const {
     id,
-    userId,
-    shiftId,
+    user,
+    shift,
     groupId,
     groupName,
     status,
     dateStart,
     dateEnd
   } = await request.body;
-  
-  
 
-  
-  
   try {
     let item: UserShift = {
       id: 0,
-      userId,
-    shiftId,
-    groupId,
-    groupName,
-    status,
-    dateStart,
-    dateEnd
+      user,
+      shift,
+      groupId,
+      groupName,
+      status,
+      dateStart,
+      dateEnd
     };
 
-    
     item = await UserShiftService.create(item);
 
     return response.status(200).json(item);
@@ -66,8 +61,8 @@ export const create_UserShift = async (request: Request, response: Response) => 
 export const edit_UserShift = async (request: Request, response: Response) => {
   const {
     id,
-    userId,
-    shiftId,
+    user,
+    shift,
     groupId,
     groupName,
     status,
@@ -78,13 +73,13 @@ export const edit_UserShift = async (request: Request, response: Response) => {
   try {
     let item: UserShift = await UserShiftService.getById(id)
 
-    item.userId =userId,
-    item.shiftId = shiftId,
-    item.groupId = groupId,
-    item.groupName = groupName,
-    item.status = status,
-    item.dateStart = dateStart,
-    item.dateEnd = dateEnd;
+    item.user = user,
+      item.shift = shift,
+      item.groupId = groupId,
+      item.groupName = groupName,
+      item.status = status,
+      item.dateStart = dateStart,
+      item.dateEnd = dateEnd;
 
     item = await UserShiftService.create(item);
 

@@ -1,17 +1,23 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 import User from "./user";
-import shift from "./shift";
+import Shift from "./shift";
 
 @Entity("userShift")
 export default class userShift {
     @PrimaryColumn()
     id: number
 
-    @Column()
-    userId: number
+    //@Column()
+    //userId: number
+    @ManyToOne(() => User, (item) => item.id)
+    @JoinColumn({ name: 'userId' })
+    user?: User;
 
-    @Column()
-    shiftId: number
+    // @Column()
+    // shiftId: number
+    @ManyToOne(() => Shift, (item) => item.id)
+    @JoinColumn({ name: 'shiftId' })
+    shift?: Shift;
 
     @Column()
     groupId: number

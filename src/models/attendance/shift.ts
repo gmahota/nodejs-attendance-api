@@ -1,15 +1,16 @@
-import { Entity, Column,PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 import WorkSchedule from "./workSchedule";
+import UserShift from "./userShift";
 
 @Entity("shift")
 export default class shift {
     @PrimaryGeneratedColumn('increment')
     id: number
 
-    @Column({length: 50, nullable:false})
+    @Column({ length: 50, nullable: false })
     name: string
 
-    @Column({length: 50, nullable:true})
+    @Column({ length: 50, nullable: true })
     description?: string
 
     @Column({ length: 50, nullable: true })
@@ -37,6 +38,11 @@ export default class shift {
     dayOfWeek: number
 
     @ManyToOne(() => WorkSchedule, (item) => item.id)
-    @JoinColumn({name:'scheduleId'})
+    @JoinColumn({ name: 'scheduleId' })
     schedule?: WorkSchedule;
+
+    @OneToMany(() => UserShift, item => item.shift, {
+        cascade: ['insert', 'update']
+    })
+    userShift?: UserShift[]
 }
