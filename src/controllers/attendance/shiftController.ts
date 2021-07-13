@@ -126,9 +126,7 @@ export const create_UserShifts = async (request: Request, response: Response) =>
     item.userShifts=[]
 
     await ShiftService.create(item);
-
-    const userShifts: UserShift[] = []
-    
+  
     users.forEach(async (user: User) => {
      const  userShift:UserShift = {
         id: 0,
