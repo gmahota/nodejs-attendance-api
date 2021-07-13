@@ -28,7 +28,7 @@ export default class userShift {
     @Column({ length: 50, nullable: false })
     groupName?: string
 
-    @Column({ length: 1, nullable: false })
+    @Column({ length: 20, nullable: false })
     status?: string
 
     @Column({ nullable: true })
