@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import ShiftService from "../../services/attendance/shift";
+import UserShiftService from "../../services/attendance/userShift";
 import Shift from "../../models/attendance/shift";
 import WorkScheduleService from "../../services/attendance/workSchedule";
 import User from './../../models/attendance/user';
@@ -124,25 +125,30 @@ export const create_UserShifts = async (request: Request, response: Response) =>
 
     let item: Shift = await ShiftService.getById(id);
     
-    const userShifts: UserShift[] = []
+    item.userShifts=[]
+    
+    await ShiftService.create(item);
 
-    users.forEach((user: User) => {
-      userShifts.push({
+    const userShifts: UserShift[] = []
+    
+    users.forEach(async (user: User) => {
+     const  userShift:UserShift = {
         id: 0,
         user: user,
-        groupId: 0,
-        groupName: "Ola Mundo",
+        userName:user.name,
+        shift:item,
+        groupId: user.userGroup?.id ,
+        groupName: user.userGroup?.name,
         dateStart: new Date(),
         dateEnd: new Date(),
-      }) 
-    })
+      }
 
-    item.userShifts = userShifts
+      await UserShiftService.create(userShift);
     
-    console.log(item.userShifts)
+    })     
 
-    item = await ShiftService.create(item);
-
+    item = await ShiftService.getById(id);
+    
     return response.status(200).json(item);
 
   } catch (e) {

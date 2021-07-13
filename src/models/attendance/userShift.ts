@@ -4,7 +4,7 @@ import Shift from "./shift";
 
 @Entity("userShift")
 export default class userShift {
-    @PrimaryGeneratedColumn('increment')
+    @PrimaryGeneratedColumn()
     id: number
 
     //@Column()
@@ -13,6 +13,9 @@ export default class userShift {
     @JoinColumn({ name: 'userId' })
     user?: User;
 
+    @Column({length: 50, nullable:true})
+    userName?: string
+    
     // @Column()
     // shiftId: number
     @ManyToOne(() => Shift, (item) => item.id)
