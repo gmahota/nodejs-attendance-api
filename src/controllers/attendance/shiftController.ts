@@ -123,7 +123,16 @@ export const create_UserShifts = async (request: Request, response: Response) =>
 
     let item: Shift = await ShiftService.getById(id);
     
-    item.userShifts=[]
+    // Coloca todos como inactivo
+    // Supostamente deve validar se o periodo e o user é o mesmo....
+    
+    item.userShifts?.filter(p=> p.status === "Activo")?.forEach(async (p:UserShift)=>{
+
+      p.status = "Inactivo"
+
+      await UserShiftService.create(p);
+
+    })
 
     await ShiftService.create(item);
   
