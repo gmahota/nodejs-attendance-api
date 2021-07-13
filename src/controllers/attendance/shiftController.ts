@@ -117,16 +117,14 @@ export const create_UserShifts = async (request: Request, response: Response) =>
 
   const { id } = request.params;
 
-  const { users } = request.body;
-
-  
+  const { users } = request.body;  
 
   try {
 
     let item: Shift = await ShiftService.getById(id);
     
     item.userShifts=[]
-    
+
     await ShiftService.create(item);
 
     const userShifts: UserShift[] = []
@@ -137,6 +135,7 @@ export const create_UserShifts = async (request: Request, response: Response) =>
         user: user,
         userName:user.name,
         shift:item,
+        status:"Activo",
         groupId: user.userGroup?.id ,
         groupName: user.userGroup?.name,
         dateStart: new Date(),
