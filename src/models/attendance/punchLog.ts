@@ -41,6 +41,9 @@ export default class PunchLog {
   @Column({ length: 20 ,nullable: true })
   punchType?: string
 
+  @Column({nullable: true})
+  shiftId?: number;
+
   @Column({nullable: true })
   shiftSupposedTimeIn?: Date
 
