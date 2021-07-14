@@ -92,3 +92,18 @@ where (devgroup.name != tnagroup.name or devgroup.createdAt != tnagroup.createdA
 
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE updatePunchLog 
+(
+	IN theDate datetime  
+)
+BEGIN
+
+update punchLog t1
+inner join View_PunchCard t2
+on punchLog.id = View_PunchCard.id
+set t1.punchType = t2.punchType, t1.shiftId = t2.shiftId, t1.shiftSupposedTimeIn = t2.timeIn, t1.shiftSupposedTimeOut = t2.timeOut;
+
+END $$;
+DELIMITER ;
