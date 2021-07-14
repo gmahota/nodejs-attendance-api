@@ -10,7 +10,7 @@ const findById = async function findById(id: string): Promise<Shift> {
 
   const data: Shift = await ShiftRepository.findOneOrFail({
       where: {id: id },
-      relations:["schedule"]
+      relations:["schedule","userShifts","userShifts.user"]
     });
 
   return data;
