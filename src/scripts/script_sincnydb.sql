@@ -79,7 +79,7 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-create PROCEDURE git () 
+create PROCEDURE jobUpdateUserGroup () 
 BEGIN 
         
 update userGroup devgroup
@@ -101,9 +101,12 @@ CREATE PROCEDURE updatePunchLog
 BEGIN
 
 update punchLog t1
-inner join View_PunchCard t2
-on punchLog.id = View_PunchCard.id
-set t1.punchType = t2.punchType, t1.shiftId = t2.shiftId, t1.shiftSupposedTimeIn = t2.timeIn, t1.shiftSupposedTimeOut = t2.timeOut;
+inner join View_updatePunchLog t2
+on t1.id = t2.id
+set t1.punchType = t2.punchType, t1.shiftId = t2.shiftId, 
+t1.shiftSupposedTimeIn = t2.timeIn, t1.shiftSupposedTimeOut = t2.timeOut, t1.punchType='Automatico',
+t1.minTimeIn = t2.minTimeIn, t1.maxTimeOut = t2.maxTimeOut;
+  
 
 END $$;
 DELIMITER ;

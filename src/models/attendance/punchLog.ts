@@ -51,6 +51,12 @@ export default class PunchLog {
   shiftSupposedTimeOut?: Date
 
   @Column({nullable: true })
+  minTimeIn?: Date
+
+  @Column({nullable: true })
+  maxTimeOut?: Date
+
+  @Column({nullable: true })
   shiftSupposedGracePerior?: Date
 
   @Column({ length: 50, nullable: true })
@@ -64,4 +70,7 @@ export default class PunchLog {
 
   @Column({ length: 50, nullable: true })
   json?: string
+
+  @Column({ length: 20 ,nullable: true })
+  updateType?: string
 }
