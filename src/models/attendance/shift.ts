@@ -37,6 +37,15 @@ export default class shift {
     @Column()
     dayOfWeek: number
 
+    @Column({ length: 20, nullable: true })
+    repeat?: string
+
+    @Column()
+    dateBegin?: Date
+
+    @Column()
+    dateEnd?: Date
+
     @ManyToOne(() => WorkSchedule, (item) => item.id)
     @JoinColumn({ name: 'scheduleId' })
     schedule?: WorkSchedule;
