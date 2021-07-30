@@ -1,15 +1,26 @@
 run:
-	##Criação de migracoes
-	yarn typeorm migration:create -n create_paymentsMpesaLogs
-	yarn typeorm migration:run 
+#Instalação do pacote
+	npm install
+  npm run build
+  node dist/server.js
 
-	## Anular a migração
-	yarn typeorm migration:revert
+dev:
+#Instalação do pacote
+	npm install
+  npm run build
+  npm run dev
 
-	#docker typeorm migration
+typeorm:
 
-	#docker
-	docker run -it --init -p 8888:5000 biostar-api-container
-	docker build -t biostar-api-container . && docker run -it --init -p 8888:5000 biostar-api-container -e dbType=mysql -e dbHost=uttn.cwsainxbbluf.us-west-2.rds.amazonaws.com -e dbPort=3306 -e dbUsername=gmahota -e dbPassword='Agnes270115!' -e dbDatabase='uttn_api_test'
-	deno run --allow-read --allow-write --allow-net --allow-env --allow-plugin --unstable bin/server.ts
-	docker build -t uttn-container . && docker run -it --init -p 8888:5000 uttn-container -e dbType=mysql -e dbHost=uttn.cwsainxbbluf.us-west-2.rds.amazonaws.com -e dbPort=3306 -e dbUsername=gmahota -e dbPassword='Agnes270115!' -e dbDatabase='uttn_api_test'
+#Criação de migracoes
+	npm run typeorm migration:create -n create_paymentsMpesaLogs
+	npm run typeorm migration:run
+
+# To Migrate
+	npm run typeorm migration
+# To Revert
+	npm run typeorm migration:revert
+
+docker:
+  docker build . -t attendance-api
+  docker run -p 5000:5000 attendance-api
