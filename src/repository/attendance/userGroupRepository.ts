@@ -25,7 +25,7 @@ const findAll = async function findAll(): Promise<UserGroup[]> {
   });
 
   return data;
-}   
+}
 
 const findByScheduleId = async function findAll(id: string): Promise<UserGroup[]> {
   const UserGroupRepository = getRepository(UserGroup);
@@ -34,13 +34,13 @@ const findByScheduleId = async function findAll(id: string): Promise<UserGroup[]
     .createQueryBuilder()
     .select("userGroup")
     .from(UserGroup, "userGroup")
-    .innerJoinAndSelect("userGroup.schedule","schedule")    
-    .where("schedule.id = :id", { id: id })    
+    .innerJoinAndSelect("userGroup.schedule","schedule")
+    .where("schedule.id = :id", { id: id })
     .getMany();
 
   return groups;
 
-  
+
 }
 
 
@@ -58,12 +58,12 @@ const insertItems = async function insertItems(
   data: UserGroup[]
 ): Promise<UserGroup[]> {
 
-  console.log('***********************Entramos no repository do User ********************************')
-  console.log(data)
+  console.debug('***********************Entramos no repository do User ********************************')
+  console.debug(data)
   const UserGroupRepository = getRepository(UserGroup);
 
   await UserGroupRepository.save(data);
-  console.log('***********************FIM no repository do User ********************************')
+  console.debug('***********************FIM no repository do User ********************************')
   return data;
 };
 

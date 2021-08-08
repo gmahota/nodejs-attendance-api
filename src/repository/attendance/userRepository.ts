@@ -1,7 +1,6 @@
 import User from "../../models/admin/user";
-import { getRepository,getConnection,FindConditions } from "typeorm";
+import { getRepository,getConnection } from "typeorm";
 import Group from "./userGroupRepository";
-import userGroup from "../../models/attendance/userGroup";
 import UserAttendance from "../../models/attendance/userAttendance";
 
 interface Filter {

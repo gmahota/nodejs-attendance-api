@@ -18,6 +18,11 @@ export class createUsershift1628432821762 implements MigrationInterface {
           type: 'varchar(50)'
         },
         {
+          name: 'name',
+          type: 'varchar(50)',
+          isNullable: true
+        },
+        {
           name: 'shiftId',
           type: 'int'
         },

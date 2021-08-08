@@ -36,7 +36,12 @@ export const create_Shift = async (request: Request, response: Response) => {
     maxTimeOut,
     gracePeriod,
     dayOfWeek,
+    dateBegin,
+    dateEnd,
     scheduleId,
+    repeat,
+    createdAt,
+    updatedAt,
     userShifts
 
   } = await request.body;
@@ -52,8 +57,13 @@ export const create_Shift = async (request: Request, response: Response) => {
       timeOut,
       minTimeIn,
       maxTimeOut,
+      dateBegin,
+      dateEnd,
       gracePeriod,
       dayOfWeek,
+      repeat,
+      createdAt,
+      updatedAt,
       userShifts
     };
 
@@ -126,7 +136,7 @@ export const create_UserShifts = async (request: Request, response: Response) =>
     // Coloca todos como inactivo
     // Supostamente deve validar se o periodo e o user é o mesmo....
 
-    item.userShifts?.filter(p=> p.status === "Activo")?.forEach(async (p:UserShift)=>{
+    item.userShifts?.filter(p => p.status === "Activo")?.forEach(async (p: UserShift) => {
 
       p.status = "Inactivo"
 
@@ -137,13 +147,13 @@ export const create_UserShifts = async (request: Request, response: Response) =>
     await ShiftService.create(item);
 
     users.forEach(async (user: User) => {
-     const  userShift:UserShift = {
+      const userShift: UserShift = {
         id: 0,
         user: user,
-        name:user.name,
-        shift:item,
-        status:"Activo",
-        groupId: user.userGroup?.id ,
+        name: user.name,
+        shift: item,
+        status: "Activo",
+        groupId: user.userGroup?.id,
         groupName: user.userGroup?.name,
         dateStart: new Date(),
         dateEnd: new Date(),
