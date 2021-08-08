@@ -1,4 +1,4 @@
-import User from "../../models/attendance/user";
+import User from "../../models/attendance/userAttendance";
 import { getRepository,getConnection,FindConditions } from "typeorm";
 import Group from "./userGroupRepository";
 import userGroup from "../../models/attendance/userGroup";
@@ -34,29 +34,29 @@ const findAll = async function findAll(filter:Filter): Promise<User[]> {
 }
 
 const findByScheduleId = async function findAll(id: string): Promise<User[]> {
-  
+
   const users: User[]= await getConnection()
     .createQueryBuilder()
     .select("user")
     .from(User, "user")
-    .innerJoinAndSelect("user.schedule","schedule")    
-    .where("schedule.id = :id", { id: id })    
+    .innerJoinAndSelect("user.schedule","schedule")
+    .where("schedule.id = :id", { id: id })
     .getMany();
 
   return users;
 
-  
+
 }
 
 const findByGroupId = async function findByGroupId(id: number): Promise<User[]> {
- 
+
 
   const users: User[]= await getConnection()
     .createQueryBuilder()
     .select("user")
     .from(User, "user")
-    .innerJoinAndSelect("user.userGroup","userGroup")    
-    .where("userGroup.id = :id", { id: id })    
+    .innerJoinAndSelect("user.userGroup","userGroup")
+    .where("userGroup.id = :id", { id: id })
     .getMany();
 
   return users;
@@ -87,11 +87,11 @@ const insertItems = async function insertItems(
   const groups = await Group.findAll();
 
   for(var i = 0; i < data.length; i++){
-        
+
     if(!!data[i].userGroup?.id){
       let ugroup: any= groups.find( p=> p.id === data[i].userGroup?.id)
 
-      data[i].userGroup = ugroup     
+      data[i].userGroup = ugroup
     }
   }
 
@@ -105,6 +105,6 @@ export default {
   findAll,
   findById,
   findByScheduleId,
-  findByGroupId, 
+  findByGroupId,
   insertItems
 };

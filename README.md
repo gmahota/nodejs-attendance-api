@@ -7,10 +7,8 @@
 
 ### Docker
 
-`
   docker build . -t attendance-api
   docker run -p 5000:5000 attendance-api
-`
 
 ## Database
 

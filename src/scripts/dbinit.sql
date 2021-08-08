@@ -1,4 +1,4 @@
 
-create database api_test;
+create database attendance_dev;
 
 

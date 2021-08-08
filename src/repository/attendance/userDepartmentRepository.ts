@@ -1,4 +1,4 @@
-import UserDepartment from "../../models/attendance/userDepartment";
+import UserDepartment from "../../models/attendance/department";
 import { getRepository,getConnection } from "typeorm";
 
 interface Key {

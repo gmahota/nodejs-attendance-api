@@ -1,7 +1,3 @@
-/*SELECT * FROM attendance_dev.punchLog;
-*/
-/**/
-
 create view View_PunchCard
 as
   (
@@ -10,9 +6,10 @@ as
     maxTimeOut, createdAt, updatedAt, updateType
   from punchLog
 );
+
 CREATE View View_updatePunchLog
 as
-  (
+
   select tab2.*, timeIn, timeOut, description, dayofweek, tab3.shiftId, minTimeIn, maxTimeOut
   from (
 	select tab1.id, tab1.code, tab1.userId, tab1.userName, tab1.userGroup, tab1.date, dayofweek(tab1.date) as diaSemanaPunch, tab1.device, tab1.deviceId, tab1.userDefinedSchedulerId,
@@ -30,45 +27,10 @@ as
     where userShift.status ='Activo'
 	) tab3 on tab2.userId = tab3.userId and time(date) between time(tab3.minTimeIn) and time(tab3.maxTimeOut) and tab3.status='Activo'
       and tab2.diaSemanaPunch = tab3.dayofweek
+)
 );
 
-/*alter View View_PunchCard
-as
-(
-	select tab2.*, timeIn, timeOut, description, dayofweek, tab3.shiftId, minTimeIn, maxTimeOut from (
-	select tab1.id, tab1.code, tab1.userId, tab1.userName, tab1.userGroup, tab1.date, dayofweek(tab1.date) as diaSemanaPunch, tab1.device, tab1.deviceId, tab1.userDefinedSchedulerId,
-	tab1.schedulerId, tab1.userDefinedSchedulerName, tab1.exception, tab1.shiftSupposedTimeIn, tab1.shiftSupposedTimeOut, tab1.shiftSupposedGracePerior
-	, tab1.shiftDescription, tab1.json, case when row_num %2 !=0 then 'Entrada' else 'Saida' end AS punchType from (
-
-	SELECT *,
-		ROW_NUMBER() OVER(PARTITION BY userId, date(date) order by date) AS row_num
-	FROM punchLog) tab1) tab2
-	left outer join
-	(
-	 select shift.*, userShift.userId, userShift.shiftId, userShift.groupId, userShift.groupName, userShift.dateStart, userShift.dateEnd  from userShift inner join shift on userShift.shiftId = shift.id where userShift.status ='Activo'
-	) tab3 on tab2.userId = tab3.userId and time(date) between time(tab3.minTimeIn) and time(tab3.maxTimeOut) and tab3.status='Activo'
-	and tab2.diaSemanaPunch = tab3.dayofweek
-);*/
-
-/*alter View View_PunchCard
-as
-(
-select tab2.*, timeIn, timeOut, description, dayofweek, shift.id shiftId, minTimeIn, maxTimeOut from (
-select tab1.id, tab1.code, tab1.userId, tab1.userName, tab1.userGroup, tab1.date, dayofweek(tab1.date) as diaSemanaPunch, tab1.device, tab1.deviceId, tab1.userDefinedSchedulerId,
-tab1.schedulerId, tab1.userDefinedSchedulerName, tab1.exception, tab1.shiftSupposedTimeIn, tab1.shiftSupposedTimeOut, tab1.shiftSupposedGracePerior
-, tab1.shiftDescription, tab1.json, case when row_num %2 !=0 then 'Entrada' else 'Saida' end AS punchType from (
-
-SELECT *,
-    ROW_NUMBER() OVER(PARTITION BY userId, date(date) order by date) AS row_num
-FROM punchLog) tab1) tab2
-left outer join shift on tab2.userDefinedSchedulerId = shift.scheduleId  and time(date) between time(shift.minTimeIn) and time(shift.maxTimeOut)
-and tab2.diaSemanaPunch = shift.dayofweek);
-*/
-/*select * from View_PunchCard;
-*/
-
-;
-alter view view_PunchDaily
+create view view_PunchDaily
 as
   select delayEntrance, delayOut, addtime(delayEntrance, delayOut) totalDelay, date, userId, userName, userGroup, shiftId, description, entrada, entradashift,
     saida, saidashift, shiftSupposedGracePerior, totalHorasEntrada, totalHorasSaida, totalHorasTrabalho
@@ -95,7 +57,6 @@ tab2
 
     )tab3;
 
-
 create view view_totalWHours
 as
   select tab1.*, userGroup.name userGroup
@@ -104,7 +65,6 @@ as
     from view_PunchDaily
     group by userId) tab1 left join userGroup on tab1.userGroupId = userGroup.id
 ;
-
 
 DELIMITER $$
 create PROCEDURE getTotalWorkingHours
@@ -116,7 +76,7 @@ create PROCEDURE getTotalWorkingHours
    IN dateEnd date
 )
 BEGIN
-  select ROW_NUMBER() OVER(PARTITION BY userId) as id, tab2.*
+  select ROW_NUMBER() OVER (PARTITION BY userId) as id, tab2.*
   from (select tab1.*, userGroup.name userGroup
     from (
     select userId, min(userName) userName, max(userGroup) userGroupId, count(date) workingDays,

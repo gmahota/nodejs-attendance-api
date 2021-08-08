@@ -16,7 +16,7 @@ export default class PunchLog {
 
   @Column({length: 50, nullable:true })
   userGroup?:string
-  
+
   @Column({ nullable:false })
   date: Date
 
@@ -68,7 +68,7 @@ export default class PunchLog {
   @Column({ nullable:true})
   updatedAt?: Date
 
-  @Column({ length: 50, nullable: true })
+  @Column({ nullable: true })
   json?: string
 
   @Column({ length: 20 ,nullable: true })

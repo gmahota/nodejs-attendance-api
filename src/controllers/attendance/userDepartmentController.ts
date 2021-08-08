@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UserDepartmentService from "../../services/attendance/userDepartment";
-import UserDepartment from "../../models/attendance/userDepartment";
+import UserDepartment from "../../models/attendance/department";
 
 export const get_all_UserDepartments = async (request: Request, response: Response) => {
 

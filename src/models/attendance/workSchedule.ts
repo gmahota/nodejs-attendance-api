@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
-import User from "./user";
+import User from "./userAttendance";
 import Shift from "./shift";
 import Group from "./userGroup";
 
@@ -28,4 +28,10 @@ export default class WorkSchedule {
     cascade: ['insert', 'update']
   })
   groups?: Group[]
+
+  @Column({ nullable: true })
+  createdAt?: Date
+
+  @Column({ nullable: true })
+  updatedAt?: Date
 }

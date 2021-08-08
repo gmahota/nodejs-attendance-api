@@ -1,5 +1,5 @@
 
-import UserDepartment  from '../../models/attendance/userDepartment'
+import UserDepartment  from '../../models/attendance/department'
 import UserDepartmentRepository  from '../../repository/attendance/userDepartmentRepository'
 
 const getById = (id:string) =>
@@ -10,7 +10,7 @@ const getAll = () =>
 
 const create = (item:UserDepartment) =>
   UserDepartmentRepository.create(item)
-  
+
 export default {
   getAll,
   getById,

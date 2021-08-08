@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
-import User from "./user";
+import User from "./userAttendance";
 import WorkSchedule from "./workSchedule";
 
 @Entity("userGroup")
 export default class userGroup {
-    @PrimaryColumn()
-    id: number
+    @PrimaryColumn({ length: 50, nullable: false })
+    id: string
 
     @Column({ length: 50, nullable: false })
     name: string
@@ -19,12 +19,16 @@ export default class userGroup {
     @Column({ nullable: true })
     parent_id?: number
 
-    @ManyToOne(() => WorkSchedule, (item) => item.id)
+    @ManyToOne(() => WorkSchedule, (item) => item.id,{
+      createForeignKeyConstraints: false
+    })
     @JoinColumn({ name: 'scheduleId' })
     schedule?: WorkSchedule;
 
     Users?: User[]
-    
+
+    Parent?:userGroup
+
     children?:userGroup[]
 
     totalUsers?:number
