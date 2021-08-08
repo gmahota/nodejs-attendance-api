@@ -1,10 +1,9 @@
 
-import User  from '../../models/attendance/user'
+import User  from '../../models/attendance/userAttendance'
 import UserRepository  from '../../repository/attendance/userRepository'
 
 interface Filter {
-  department?:string,
-  group?: string;
+  groupId?: string;
   scheduleId?: number
 }
 
@@ -20,7 +19,7 @@ const create = (item:User) =>
 const getByScheduleId = (id: string) =>
 UserRepository.findByScheduleId(id)
 
-const getByUserGroup = (id: number) =>
+const getByUserGroup = (id: string) =>
 UserRepository.findByGroupId(id)
 
 const insertItems = (items:User[]) =>
@@ -31,7 +30,7 @@ export default {
   getAll,
   getById,
   create,
-  getByScheduleId, 
+  getByScheduleId,
   getByUserGroup,
   insertItems
 }

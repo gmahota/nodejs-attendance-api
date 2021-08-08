@@ -3,7 +3,7 @@ import ShiftService from "../../services/attendance/shift";
 import UserShiftService from "../../services/attendance/userShift";
 import Shift from "../../models/attendance/shift";
 import WorkScheduleService from "../../services/attendance/workSchedule";
-import User from './../../models/attendance/user';
+import User from './../../models/attendance/userAttendance';
 import UserShift from './../../models/attendance/userShift';
 
 export const get_all_Shifts = async (request: Request, response: Response) => {
@@ -117,15 +117,15 @@ export const create_UserShifts = async (request: Request, response: Response) =>
 
   const { id } = request.params;
 
-  const { users } = request.body;  
+  const { users } = request.body;
 
   try {
 
     let item: Shift = await ShiftService.getById(id);
-    
+
     // Coloca todos como inactivo
     // Supostamente deve validar se o periodo e o user é o mesmo....
-    
+
     item.userShifts?.filter(p=> p.status === "Activo")?.forEach(async (p:UserShift)=>{
 
       p.status = "Inactivo"
@@ -135,12 +135,12 @@ export const create_UserShifts = async (request: Request, response: Response) =>
     })
 
     await ShiftService.create(item);
-  
+
     users.forEach(async (user: User) => {
      const  userShift:UserShift = {
         id: 0,
         user: user,
-        userName:user.name,
+        name:user.name,
         shift:item,
         status:"Activo",
         groupId: user.userGroup?.id ,
@@ -150,11 +150,11 @@ export const create_UserShifts = async (request: Request, response: Response) =>
       }
 
       await UserShiftService.create(userShift);
-    
-    })     
+
+    })
 
     item = await ShiftService.getById(id);
-    
+
     return response.status(200).json(item);
 
   } catch (e) {

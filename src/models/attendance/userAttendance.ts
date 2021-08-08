@@ -26,7 +26,7 @@ export default class UserAttendance {
   user?: User;
 
   @ManyToOne(() => userGroup, (item) => item.id)
-  @JoinColumn({ name: 'userGroupId' })
+  @JoinColumn({ name: 'groupId' })
   userGroup?: userGroup;
 
   @ManyToOne(() => WorkSchedule, (item) => item.id)

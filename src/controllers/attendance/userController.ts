@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import UserService from "../../services/attendance/users";
-import User from "../../models/attendance/user";
+import User from "../../models/attendance/userAttendance";
 
 export const get_all_Users = async (request: Request, response: Response) => {
   const {
     group,
-    department
-  } = request.body;
+    schedule
+  } = request.query;
 
   const Users = await UserService.getAll({
-    group,
-    department
+    groupId: !!group ? String(group) : undefined,
+    scheduleId: !!schedule ? Number(schedule): undefined,
   });
 
   return response.status(200).json(Users);
@@ -29,17 +29,18 @@ export const get_User = async (request: Request, response: Response) => {
 
 export const create_User = async (request: Request, response: Response) => {
   const {
+    id,
     name,
-    scheduleByUserOrGroup,
+    typeSchedule,
     userGroup,
     schedule
   } = await request.body;
 
   try {
     let item: User = {
-      id:0,
+      id,
       name,
-      scheduleByUserOrGroup,
+      typeSchedule,
       userGroup,
       schedule
     };
@@ -47,7 +48,7 @@ export const create_User = async (request: Request, response: Response) => {
     item = await UserService.create(item);
 
     return response.status(200).json(item);
-    
+
   } catch (e) {
     return response.status(404).json(
       { msg: "error to create a product with that i", error: e },
@@ -60,12 +61,12 @@ export const create_Users = async (request: Request, response: Response) => {
   const Users = await request.body;
 
   try {
-    let items: User[] = Users;    
+    let items: User[] = Users;
 
     items = await UserService.insertItems(items);
 
     return response.status(200).json(items);
-    
+
   } catch (e) {
     return response.status(404).json(
       { msg: "error to create a product with that i", error: e },

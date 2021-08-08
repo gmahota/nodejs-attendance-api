@@ -22,8 +22,8 @@ export default class userShift {
     @JoinColumn({ name: 'shiftId' })
     shift: Shift;
 
-    @Column()
-    groupId?: number
+    @Column({ nullable: true })
+    groupId?: string
 
     @Column({ length: 50, nullable: true })
     groupName?: string

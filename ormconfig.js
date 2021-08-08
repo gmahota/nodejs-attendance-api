@@ -12,5 +12,5 @@ module.exports =  {
   },
   logging: ["error"],
   logger:process.env.TYPEORM_logger,
-  synchronize: process.env.TYPEORM_synchronize
+  synchronize: false
 }

@@ -1,6 +1,6 @@
 
 import UserGroup from '../../models/attendance/userGroup'
-import User from '../../models/attendance/user'
+import User from '../../models/attendance/userAttendance'
 import UserGroupRepository from '../../repository/attendance/userGroupRepository'
 import UserRepository from '../../repository/attendance/userRepository'
 

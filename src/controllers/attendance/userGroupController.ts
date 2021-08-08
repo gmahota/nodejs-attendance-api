@@ -3,11 +3,11 @@ import UserGroupService from "../../services/attendance/userGroup";
 import UserService from "../../services/attendance/users";
 import UserGroup from "../../models/attendance/userGroup";
 import WorkScheduleService from "../../services/attendance/workSchedule";
-import User from "../../models/attendance/user";
+import User from "../../models/attendance/userAttendance";
 
 export const get_all_UserGroups = async (request: Request, response: Response) => {
 
-  const { seeUsers } = request.query; 
+  const { seeUsers } = request.query;
 
   const UserGroups = await UserGroupService.getAll(Boolean(seeUsers)||false);
 
@@ -33,7 +33,7 @@ export const edit_UserGroup = async (request: Request, response: Response) => {
     name,
     schedule
   } = await request.body;
-  
+
   try {
 
 
@@ -63,24 +63,25 @@ export const edit_UserGroup = async (request: Request, response: Response) => {
 
 export const create_UserGroup = async (request: Request, response: Response) => {
   const {
+    id,
     name,
     scheduleId
   } = await request.body;
 
   try {
     let item: UserGroup = {
-      id:0,
+      id,
       name
     };
 
-    if(!!scheduleId){      
+    if(!!scheduleId){
       item.schedule =await WorkScheduleService.getById(scheduleId)
     }
-    
+
     item = await UserGroupService.create(item);
 
     return response.status(200).json(item);
-    
+
   } catch (e) {
     return response.status(404).json(
       { msg: "error to create a product with that i", error: e },
@@ -114,7 +115,7 @@ export const create_UserGroups = async (request: Request, response: Response) =>
     items = await UserGroupService.insertItems(items);
 
     return response.status(200).json(items);
-    
+
   } catch (e) {
     return response.send(404).json(
       { msg: "error to create a order with that i" },

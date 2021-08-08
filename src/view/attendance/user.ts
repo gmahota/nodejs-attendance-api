@@ -1,12 +1,12 @@
-import User from "../../models/attendance/user"
+import User from "../../models/attendance/userAttendance"
 
 
 export default {
   render(item: User) {
     return {
       id:item.id,
-      name:item.name, 
-      scheduleByUserOrGroup:item.scheduleByUserOrGroup,
+      name:item.name,
+      scheduleByUserOrGroup:item.typeSchedule,
       userGroup:item.userGroup?.name,
       schedule:item.schedule?.name
     };

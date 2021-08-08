@@ -1,29 +1,31 @@
-import User from "../../models/attendance/userAttendance";
+import User from "../../models/admin/user";
 import { getRepository,getConnection,FindConditions } from "typeorm";
 import Group from "./userGroupRepository";
 import userGroup from "../../models/attendance/userGroup";
+import UserAttendance from "../../models/attendance/userAttendance";
+
 interface Filter {
   department?:string,
   group?: string;
+  scheduleId?: number
 }
 
-const findById = async function findById(id: string): Promise<User> {
-  const UserRepository = getRepository(User);
+const findById = async function findById(id: string): Promise<UserAttendance> {
+  const UserRepository = getRepository(UserAttendance);
 
-  const data: User = await UserRepository.findOneOrFail({
+  const data: UserAttendance = await UserRepository.findOneOrFail({
       where: {id: id },
-      relations: ["userGroup","schedule","department"]
+      relations: ["userGroup","schedule","user"]
     });
 
   return data;
 };
 
-const findAll = async function findAll(filter:Filter): Promise<User[]> {
-  const UserRepository = getRepository(User);
+const findAll = async function findAll(filter:Filter): Promise<UserAttendance[]> {
+  const UserRepository = getRepository(UserAttendance);
 
-  const data: User[] = await UserRepository.find({
-    where: "",
-    relations: ["userGroup","schedule","department"],
+  const data: UserAttendance[] = await UserRepository.find({
+    relations: ["userGroup","schedule","user"],
     order: {
       name: "ASC",
       id: "DESC",
@@ -33,12 +35,12 @@ const findAll = async function findAll(filter:Filter): Promise<User[]> {
   return data;
 }
 
-const findByScheduleId = async function findAll(id: string): Promise<User[]> {
+const findByScheduleId = async function findAll(id: string): Promise<UserAttendance[]> {
 
-  const users: User[]= await getConnection()
+  const users: UserAttendance[]= await getConnection()
     .createQueryBuilder()
     .select("user")
-    .from(User, "user")
+    .from(UserAttendance, "user")
     .innerJoinAndSelect("user.schedule","schedule")
     .where("schedule.id = :id", { id: id })
     .getMany();
@@ -48,13 +50,13 @@ const findByScheduleId = async function findAll(id: string): Promise<User[]> {
 
 }
 
-const findByGroupId = async function findByGroupId(id: number): Promise<User[]> {
+const findByGroupId = async function findByGroupId(id: string): Promise<UserAttendance[]> {
 
 
-  const users: User[]= await getConnection()
+  const users: UserAttendance[]= await getConnection()
     .createQueryBuilder()
     .select("user")
-    .from(User, "user")
+    .from(UserAttendance, "user")
     .innerJoinAndSelect("user.userGroup","userGroup")
     .where("userGroup.id = :id", { id: id })
     .getMany();
@@ -63,9 +65,10 @@ const findByGroupId = async function findByGroupId(id: number): Promise<User[]> 
 };
 
 const create = async function create(
-  data: User
-): Promise<User> {
+  data: UserAttendance
+): Promise<UserAttendance> {
   const UserRepository = getRepository(User);
+  const UserAtt =getRepository(UserAttendance);
 
   if(!!data.userGroup?.id){
     data.userGroup = await Group.findById(data.userGroup?.id.toString()||"0")
@@ -73,16 +76,31 @@ const create = async function create(
     //console.log(data[i])
   }
 
-  await UserRepository.save(data);
+  let user = await UserRepository.findOne({
+    where:{id: data.id }
+  })
+
+  if(user === undefined)
+  {
+    user =await UserRepository.save({
+      id:data.id,
+      name:data.name
+    });
+  }
+
+  data.user = user;
+
+  await UserAtt.save(data);
 
   return data;
 };
 
 const insertItems = async function insertItems(
-  data: User[]
-): Promise<User[]> {
+  data: UserAttendance[]
+): Promise<UserAttendance[]> {
 
   const UserRepository = getRepository(User);
+  const UserAttRepository =getRepository(UserAttendance);
 
   const groups = await Group.findAll();
 
@@ -92,10 +110,24 @@ const insertItems = async function insertItems(
       let ugroup: any= groups.find( p=> p.id === data[i].userGroup?.id)
 
       data[i].userGroup = ugroup
+
+      let user = await UserRepository.findOne({
+        where:{id: data[i].id }
+      })
+
+      if(user === undefined)
+      {
+        user =await UserRepository.save({
+          id:data[i].id,
+          name:data[i].name
+        });
+      }
+
+      data[i].user = user;
     }
   }
 
-  await UserRepository.save(data);
+  await UserAttRepository.save(data);
 
   return data;
 };
